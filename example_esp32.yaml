@@ -1,0 +1,98 @@
+# Beispiel: AMIS-Zähler mit ESP32, Home Assistant API und optionalem MQTT-JSON
+# Alle Passwörter und Schlüssel stehen in der secrets.yaml (Vorlage: secrets.yaml.example).
+esphome:
+  name: amisreader
+  friendly_name: AmisReader
+
+external_components:
+  - source: github://hgaderGit/amisreader@main
+    components: [amisreader]
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+#  level: VERBOSE
+#  tx_buffer_size: 1024   # <--- tx_buffer_size auf 1024 erhöhen, wenn VERBOSE oder VERY_VERBOSE verwendet wird
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Amisreader Fallback Hotspot"
+    password: !secret ap_password
+
+captive_portal:
+
+# Optional: MQTT. Ohne diesen Block wird kein JSON gesendet.
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discovery: false  # <--- verhindert doppelte Entitäten in Home Assistant
+
+uart:
+  id: uart_bus
+  tx_pin: GPIO16
+  rx_pin: GPIO15
+  baud_rate: 9600
+  data_bits: 8
+  parity: EVEN
+  stop_bits: 1
+  rx_buffer_size: 512
+
+sensor:
+  - platform: amisreader
+    aes_key: !secret amis_aes_key
+    mqtt_json_topic: "AMIS"          # optional, Standard: amisreader/json_sma
+
+    power:
+      name: "Amis Power A+-"
+      filters:
+        - throttle: 5s               # optional: Der Zähler sendet jede Sekunde
+    power_forward:
+      name: "Amis Power A+"
+    power_reverse:
+      name: "Amis Power A-"
+    reactive_power_import:
+      name: "Amis Power R+"
+    reactive_power_export:
+      name: "Amis Power R-"
+
+    energy_forward:
+      name: "Amis Energy A+"
+    energy_reverse:
+      name: "Amis Energy A-"
+    reactive_energy_import:
+      name: "Amis Energy R+"
+    reactive_energy_export:
+      name: "Amis Energy R-"
+
+    energy_inkasso:
+      name: "Amis Energy Inkasso"
+
+    # Berechnete Viertelstunden-Werte
+    power_quarter_hour:
+      name: "Amis Power Quarter Hour"
+    power_last_quarter_hour:
+      name: "Amis Power Last Quarter Hour"
+    power_max_month:
+      name: "Amis Power Max Month"
+
+    # Zählerzeit aus dem Telegramm
+    date_time:
+      name: "Amis Date Time"
