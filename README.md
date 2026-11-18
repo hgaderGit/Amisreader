@@ -6,6 +6,7 @@ MQTT-Infrastrukturen einbinden.
 
 Hintergrund (Österreich / ElWG & SNE-G-V): Mit der Reform der Netzentgelte in Österreich (geregelt durch das ElWG und die Systemnutzungsentgelte-Grundsatzverordnung SNE-G-V der E-Control) wird zwischen 2027 und 2028 schrittweise ein Leistungspreis für Haushalte eingeführt. Bemessungsgrundlage für den monatlichen Leistungspreis ist der höchste durchschnittliche 15-Minuten-Leistungswert (Viertelstundenmaximum) eines Kalendermonats. Diese ESPHome-Komponente berechnet genau diese Intervalle lokal in Echtzeit, um Lastspitzen rechtzeitig zu erkennen und Verbraucher (wie Wallbox oder Wärmepumpe) im Smart Home gezielt zu steuern.
 
+
 > **Hinweis:** Dies ist ein privates Hobbyprojekt und **keine offizielle Lösung** des Netzbetreibers oder des
 > Zähler-Herstellers. Nutzung, Nachbau und der Anschluss an den Zähler erfolgen **auf eigene Verantwortung**.
 > Siehe auch [Lizenz und Haftung](#lizenz-und-haftung).
