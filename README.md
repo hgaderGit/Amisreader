@@ -244,11 +244,8 @@ Die `time`-Werte im JSON sind wie bei allen anderen Einträgen Unix-Zeit der Zä
 - Es wird nicht über Lücken von mehr als 60 s zwischen zwei Telegrammen hinweg interpoliert. Das Gleiche gilt für
   Zeitsprünge (z. B. Zeitsynchronisation des Zählers, Zeitumstellung), rückwärts laufende Zählerstände und eine Zählerzeit,
   die der Zähler selbst als ungültig kennzeichnet. Die betroffene Viertelstunde wird verworfen.
-- Die Genauigkeit wird von der Auflösung des Zählerstands begrenzt: 1 Wh entspricht 4 W pro Viertelstunde. In meinen
-  Simulationen mit wechselnder Last und bis zu 20 % verlorenen Telegrammen lag die Abweichung bei höchstens etwa 3 W.
-  Gegenüber dem vom Zähler selbst gebildeten Wert (falls vorhanden) sind daher Unterschiede von einigen Watt normal.
-- Die Berechnung wurde bisher nur mit simulierten Zählerdaten geprüft, nicht gegen die Werte eines echten Zählers.
-
+- Die Genauigkeit wird von der Auflösung des Zählerstands begrenzt: 1 Wh entspricht 4 W pro Viertelstunde.
+  
 ### Zählerzeit (`date_time`)
 
 Der Text-Sensor zeigt die Zählerzeit des letzten Telegramms im Format `2026-04-21 23:35:13`. Er wird **bei jedem
